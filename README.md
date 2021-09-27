@@ -9,9 +9,9 @@ _Predicting AC Optimal Power Flows: Combining Deep Learning and Lagrangian Dual 
 Ferdinando Fioretto, Terrence W.K. Mak, Pascal Van Hentenryck. 
 In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 2020.
 
-Please cite it as
+**Cite as**
 
-```
+```bibtex
 @inproceedings{Fioretto:AAAI20, 
   author    = {Ferdinando Fioretto and {Terrence W.K.} Mak and Pascal {Van Hentenryck}},
   title     = {Predicting {AC} Optimal Power Flows: Combining Deep Learning and Lagrangian Dual Methods},
