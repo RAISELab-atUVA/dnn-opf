@@ -25,6 +25,25 @@ In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 2020.
 ```
 
 # Usage
+
+**Installation**
+Julia Packages:
+- PowerModels v0.18.1
+- JuMP v0.21.8
+- Ipopt v0.6.5
+- Random
+- Distributions
+- JSON
+- ProgressMeter v1.7.1
+- ArgParse v1.1.4
+- PyCall v1.92.3
+- PyPlot
+
+Python Packages
+- torch
+- numpy
+- random
+
 **Dataset Generation**
 The training set for a network <netname> are generated using the following command:
 
