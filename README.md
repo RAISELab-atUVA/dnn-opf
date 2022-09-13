@@ -28,7 +28,7 @@ In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 2020.
 
 **Installation**
 Julia Packages:
-- PowerModels v0.18.1
+- PowerModels v0.13.2
 - JuMP v0.21.8
 - Ipopt v0.6.5
 - Random
@@ -61,36 +61,69 @@ After the training data is generated we can train our Neural Network.
 To do so, run the following command:
 
 ```
-  julia src/ml-opf.jl --netname nesta_case14_ieee
+  julia src/opf-dnn.jl --netname nesta_case14_ieee
 ```
 
 The following arguments can be set:
-- _--nocuda_  (Do not use CUDA).
-  + Default value: false
-- _--traindata_ The name of the input file, within the "netname" folder.
+- _--netpath_  The path to the input networks (.m) (Do not change).
+  + Default value: "data/inputs/"
+
+- _--netname -n  The input network name.
+  + Default value: nesta_case14_ieee
+
+- _--traindata --i_ The name of the input file, within the "netname" folder.
   It expects a file formatted as the output of the dataset generation procedure.
   + Default value: "traindata.json"
-- _--outfile_ The name of the output file, within the "netname" folder.
-  + Default value: "results.json"
-- _--nepochs_ The number of epochs.
+
+- _--out-suffix -s_  he suffix given to the output file to identify a given program variant.
+  + Default value: nothing
+
+- _--plot-outfile -p_ The name of the result file, within the netname folder.
+  + Default value: losses.png
+
+- _--results-outfile_ The name of the result output file, within the "netname" folder.
+  + Default value: "results.pkl"
+
+- _--use-state"_  Exploit hot-start state.
+  + Default value: false
+
+- _--use-constraints"_  Use Lagrangian constraint penalties.
+  + Default value: true
+
+- _--use-dual-update_  Use Lagrangian dual update.
+  + Default value: false
+
+- _--nocuda_  Do not use CUDA.
+  + Default value: false
+
+- _--nettype -t_ Enc[oder] or dec[oder].
+  + Default value: false
+
+- _--nepochs -e_ The number of epochs.
   + Default value: 10
-- _--batchsize_ The size of the batch.
-  + Default value: 1
+
+- _--batchsize -b_ The size of the batch.
+  + Default value: 10
+
 - _--split_ Train split in (0, 1). The rest is given to Test.
   + Default value: 0.8
-- _--version_ Problem version [1, 2].
-    + version 1: outputs (**pg**, **vg**)
-    + version 2: outputs (**pg**, **vg**), (S_ij, S_ji)
-    + Default value: 2
+
+- _--state-distance_ The distance, in percentage, between each two network
+                    states, used in the construction of hot-start states
+                    training data.
+  + Default value: 1.0
+
+- _--seed_ 
+  + Default value: 1234
+
 - _--lr_ The learning rate.
   + Default value: 0.001
-- _--c_pv_bnd_ Activate Lagrangian on Pg and Vg bounds.
-  + Default value: true
-- _--c_flow_loss_ Activate lagrangian on total flow loss.
-  + Default value: false
-- _--c_thermolimits_ Activate thermolimits loss
-  + Default value: false
-  + Version required: >= 2
+
+- _--dur_ Dual update rate.
+  + Default value: 0.01
+
+- _--traindata-size_ Maxmium traindata size
+  + Default value: 100000
 
 The program above executes two main steps:
 
