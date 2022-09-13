@@ -67,61 +67,43 @@ To do so, run the following command:
 The following arguments can be set:
 - _--netpath_  The path to the input networks (.m) (Do not change).
   + Default value: "data/inputs/"
-
 - _--netname -n  The input network name.
   + Default value: nesta_case14_ieee
-
 - _--traindata --i_ The name of the input file, within the "netname" folder.
   It expects a file formatted as the output of the dataset generation procedure.
   + Default value: "traindata.json"
-
 - _--out-suffix -s_  he suffix given to the output file to identify a given program variant.
   + Default value: nothing
-
 - _--plot-outfile -p_ The name of the result file, within the netname folder.
   + Default value: losses.png
-
 - _--results-outfile_ The name of the result output file, within the "netname" folder.
   + Default value: "results.pkl"
-
 - _--use-state"_  Exploit hot-start state.
   + Default value: false
-
 - _--use-constraints"_  Use Lagrangian constraint penalties.
   + Default value: true
-
 - _--use-dual-update_  Use Lagrangian dual update.
   + Default value: false
-
 - _--nocuda_  Do not use CUDA.
   + Default value: false
-
 - _--nettype -t_ Enc[oder] or dec[oder].
   + Default value: false
-
 - _--nepochs -e_ The number of epochs.
   + Default value: 10
-
 - _--batchsize -b_ The size of the batch.
   + Default value: 10
-
 - _--split_ Train split in (0, 1). The rest is given to Test.
   + Default value: 0.8
-
 - _--state-distance_ The distance, in percentage, between each two network
                     states, used in the construction of hot-start states
                     training data.
   + Default value: 1.0
-
 - _--seed_ 
   + Default value: 1234
-
 - _--lr_ The learning rate.
   + Default value: 0.001
-
 - _--dur_ Dual update rate.
   + Default value: 0.01
-
 - _--traindata-size_ Maxmium traindata size
   + Default value: 100000
 
