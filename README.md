@@ -121,6 +121,9 @@ The second step produces an output file, saved by default in "results.json". Its
 component are reviewed next.
 
 #### Result Output
+
+To generate the desired results, set: write_loadflow_results, write_test_results, write_training_losses, write_summary_results to _true_ in opf-dnn.jl (r. 10-14).
+
 The result file, output of the testing restoration phase is described by the
 following components. All these results pertain the networks generated in the
 _test set_:
