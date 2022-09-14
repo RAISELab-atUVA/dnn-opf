@@ -84,7 +84,7 @@ if write_summary_results
   write_data(Dict("vm"=>mean(errors["vm"]),
                   "va"=>mean(errors["va"]),
                   "pg"=>mean(errors["pg"]),
-				  "qg"=>mean(errors["qg"]),
+				  #"qg"=>mean(errors["qg"]),
                   "ohm"=>mean(errors["ohm"]),
                   "klc"=>mean(errors["klc"])),
              args, "summary")
