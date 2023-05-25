@@ -43,6 +43,9 @@ Python Packages
 - torch
 - numpy
 - random
+- matplotlib
+- sklearn
+- xgboost
 
 **Dataset Generation**
 The training set for a network <netname> are generated using the following command:
@@ -61,7 +64,7 @@ After the training data is generated we can train our Neural Network.
 To do so, run the following command:
 
 ```
-  julia src/opf-dnn.jl --netname nesta_case14_ieee
+  julia opf-dnn.jl --netname nesta_case14_ieee
 ```
 
 The following arguments can be set:
@@ -120,6 +123,12 @@ The program above executes two main steps:
 The second step produces an output file, saved by default in "results.json". Its
 component are reviewed next.
 
+*Trees Training Step*
+```
+julia src/trees.jl 
+```
+Arguments list can be found in "dt-utils.jl".
+	
 #### Result Output
 
 To generate the desired results, set: write_loadflow_results, write_test_results, write_training_losses, write_summary_results to _true_ in opf-dnn.jl (r. 10-14).
