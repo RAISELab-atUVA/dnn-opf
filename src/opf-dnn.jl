@@ -7,21 +7,23 @@
 		 Predicting AC Optimal Power Flows: Combining Deep Learning and
 		 Lagrangian Dual Methods. CoRR abs/1909.10461 (2019)
 """
+
 write_loadflow_results = true
 write_test_results     = true
 write_training_losses  = true
 write_summary_results  = true
 
-include("opf-dnn/utils.jl")
-
+include("src/opf-dnn/utils.jl")
 # Parse Arguments
+using Random
 args = parse_commandline()
 fix_random_params(args["seed"])
+Random.seed!(args["seed"])
 
 if args["use-state"]
-	include("opf-dnn/agent_S.jl")
+	include("src/opf-dnn/agent_S.jl")
 else
-	include("opf-dnn/agent_N.jl")
+	include("src/opf-dnn/agent_N.jl")
 end
 
 # Create agent and Train it
@@ -34,8 +36,8 @@ save_model(agent, args)
 #########
 # Save Results and post-process
 ########
-include("opf-datagen/restoration_w_hotstart.jl")
-include("opf-dnn/report.jl")
+include("src/opf-datagen/restoration_w_hotstart.jl")
+include("src/opf-dnn/report.jl")
 
 # Modify Test data
 exp = read_data(args, args["traindata"])["experiments"]
@@ -67,36 +69,41 @@ if (write_test_results || write_loadflow_results)
 end
 
 results = Dict()
+errors_file = Dict() #added
 results["scales"] = scales_idx
 
 if write_test_results
 	results["test_errors"] = errors
+	errors_file["errors"] = errors #added
 	results["predictions"] = predictions
 end
 
 ## Solve Load-Flow Problem (slow)
 if write_loadflow_results
 	results["loadflow"] = solve_restoration_problem(args, predictions, agent.data_indexes)
+	loadflow = results["loadflow"]
 end
+
 
 ## Result summary
 if write_summary_results
   write_data(Dict("vm"=>mean(errors["vm"]),
                   "va"=>mean(errors["va"]),
                   "pg"=>mean(errors["pg"]),
-				  "qg"=>mean(errors["qg"]),
+				  #"qg"=>mean(errors["qg"]),
                   "ohm"=>mean(errors["ohm"]),
                   "klc"=>mean(errors["klc"])),
              args, "summary")
 end
 
 if write_training_losses
-	save_plot_losses(losses, args, "far")
-	save_plot_losses(losses, args, "reg", 0.1)
-	save_plot_losses(losses, args, "zoom", 0.01)
+	#save_plot_losses(losses, args, "far")
+	#save_plot_losses(losses, args, "reg", 0.1)
+	#save_plot_losses(losses, args, "zoom", 0.01)
 	results["train_losses"] = losses
 end
 
 if (write_test_results || write_loadflow_results || write_training_losses || write_summary_results)
 	write_data(Dict("results" => results, "settings" => args), agent.config)
+	write_data(Dict("loadflow" =>loadflow), agent.config, "loadflow")
 end
