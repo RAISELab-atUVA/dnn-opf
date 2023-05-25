@@ -69,12 +69,10 @@ if (write_test_results || write_loadflow_results)
 end
 
 results = Dict()
-errors_file = Dict() #added
 results["scales"] = scales_idx
 
 if write_test_results
 	results["test_errors"] = errors
-	errors_file["errors"] = errors #added
 	results["predictions"] = predictions
 end
 
@@ -97,9 +95,9 @@ if write_summary_results
 end
 
 if write_training_losses
-	#save_plot_losses(losses, args, "far")
-	#save_plot_losses(losses, args, "reg", 0.1)
-	#save_plot_losses(losses, args, "zoom", 0.01)
+	save_plot_losses(losses, args, "far")
+	save_plot_losses(losses, args, "reg", 0.1)
+	save_plot_losses(losses, args, "zoom", 0.01)
 	results["train_losses"] = losses
 end
 
