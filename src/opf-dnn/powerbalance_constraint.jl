@@ -1,5 +1,5 @@
 using JSON, JuMP, Ipopt, PowerModels
-PowerModels.silence() # suppress warning and info messages
+#PowerModels.silence() # suppress warning and info messages
 include("torch.jl")
 
 """
@@ -31,7 +31,7 @@ mutable struct PowerBalanceConstraint
         end
         BS = config["batchsize"]
         pnet = datainfo.powernet
-        pm = PowerModels.build_model(pnet, ACPPowerModel, PowerModels.post_opf)
+        pm = PowerModels.instantiate_model(pnet, ACPPowerModel, PowerModels.build_opf)
         N = datainfo.n_buses
         bus_IDs = [parse(Int, i) for i in keys(pm.data["bus"])]
 
@@ -65,7 +65,8 @@ mutable struct PowerBalanceConstraint
 
     function get_bus_shunt(pm, bus_idx, type, nw=0, cnd=1)
         bus_shunts = ref(pm, nw, :bus_shunts, bus_idx)
-        vals = sum0([ref(pm, nw, :shunt, j, type, cnd) for j in bus_shunts])
+        #vals = sum0([ref(pm, nw, :shunt, j, type, cnd) for j in bus_shunts])
+        vals = sum0([ref(pm, nw, :shunt, j, type) for j in bus_shunts])
     end
 
     function get_Vol_bus_idx(pm, bus_idx, datainfo, pred_type)

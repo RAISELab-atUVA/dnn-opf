@@ -3,7 +3,7 @@ using Random, Distributions
 using JSON
 using ProgressMeter
 using ArgParse
-PowerModels.silence() # suppress warning and info messages
+#PowerModels.silence() # suppress warning and info messages
 Random.seed!(123)
 
 """ Parse Arguments """

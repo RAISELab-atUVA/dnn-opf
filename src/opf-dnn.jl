@@ -8,9 +8,9 @@
 		 Lagrangian Dual Methods. CoRR abs/1909.10461 (2019)
 """
 write_loadflow_results = true
-write_test_results     = false
-write_training_losses  = false
-write_summary_results  = false
+write_test_results     = true
+write_training_losses  = true
+write_summary_results  = true
 
 include("opf-dnn/utils.jl")
 
@@ -84,7 +84,7 @@ if write_summary_results
   write_data(Dict("vm"=>mean(errors["vm"]),
                   "va"=>mean(errors["va"]),
                   "pg"=>mean(errors["pg"]),
-				  #"qg"=>mean(errors["qg"]),
+				  "qg"=>mean(errors["qg"]),
                   "ohm"=>mean(errors["ohm"]),
                   "klc"=>mean(errors["klc"])),
              args, "summary")

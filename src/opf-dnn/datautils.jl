@@ -431,7 +431,6 @@ end
 
 function save_model(agent, config, prefix=nothing)
     file = get_file_name(config, "model", prefix)
-    mkpath("data/predictions/" * config["netname"] * "/")
     torch.save(agent.model.state_dict(), file)
 end
 

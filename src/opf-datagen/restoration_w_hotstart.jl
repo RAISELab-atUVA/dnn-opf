@@ -17,7 +17,7 @@ end
 
 """ Create Model """
 function get_mappings(data, ori_pg)
-    pm = build_model(data, ACPPowerModel, PowerModels.post_opf,
+    pm = instantiate_model(data, ACPPowerModel, PowerModels.build_opf,
                      setting = Dict("output" => Dict("branch_flows" => true)))
 
     gMdl_to_gSrc, gSrc_to_gMdl = Dict(), Dict()
@@ -90,7 +90,7 @@ end
 
 """ Post OPF problem """
 function find_restoration(data, solver)
-    pm = PowerModels.build_model(data, ACPPowerModel, PowerModels.post_opf,
+    pm = PowerModels.instantiate_model(data, ACPPowerModel, PowerModels.build_opf,
                      setting = Dict("output" => Dict("branch_flows" => true)))
 
     slack_gen = _argmax_pairs([(i, gen["pmax"] - gen["pg"]) for (i, gen) in pm.ref[:nw][pm.cnw][:gen]])
@@ -126,7 +126,7 @@ end
 """ Find Feasible flow htat is the closest to current state """
 function closest_feasible_dist(data, solver, pred_pg, pred_vg,
                                gSrc_to_gMdl, vSrc_to_vMdl, ac_sol, total_pg, total_qg)
-   pm = PowerModels.build_model(data, ACPPowerModel, PowerModels.post_opf,
+   pm = PowerModels.instantiate_model(data, ACPPowerModel, PowerModels.build_opf,
                      setting = Dict("output" => Dict("branch_flows" => true)))
 
     @objective(pm.model, Min,
@@ -265,9 +265,9 @@ function solve_restoration_problem(settings, predicted_pv, comboidx)
         # Update network data
         test_net = update_net(input_net, pd, qd, pred_pg, pred_vg)
 
-        dc_pm = PowerModels.build_model(test_net, DCPPowerModel, PowerModels.post_opf)
+        dc_pm = PowerModels.instantiate_model(test_net, DCPPowerModel, PowerModels.build_opf)
         dc_sol = optimize_model!(dc_pm, solver)
-        ac_pm = PowerModels.build_model(test_net, ACPPowerModel, PowerModels.post_opf)
+        ac_pm = PowerModels.instantiate_model(test_net, ACPPowerModel, PowerModels.build_opf)
         ac_sol = optimize_model!(ac_pm, solver)
         AC_OPF_Cost[idx] = ac_sol["objective"]
         DC_OPF_Cost[idx] = dc_sol["objective"]
